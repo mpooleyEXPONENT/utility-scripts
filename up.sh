@@ -22,7 +22,7 @@ then
 		cd ..
 	done
 fi
-if [ $# > 1 ] # check for too many arguments and alert if appropriate (only the 1st argument is used)
+if [ $# -gt 1 ] # check for too many arguments and alert if appropriate (only the 1st argument is used)
 then
-	echo Warning: Too many arguments - arguments after 1st have been ignored
+	echo Warning: Too many arguments - $# arguments detected, those after 1st have been ignored
 fi
