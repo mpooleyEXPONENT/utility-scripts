@@ -33,7 +33,7 @@ while getopts "o:l:c:" opt; do
 			then
 				echo Location already mounted, performing umount prior to following link:
 				echo $ umount $mntPath
-				umount $mntPath
+				umount "$mntPath"
 			fi
 				echo Navigating to: $output # display target location in terminal
 				open smb://$USER:$(security find-generic-password -a ${USER} -w)@"$output" # "follow" the link!
@@ -51,7 +51,7 @@ while getopts "o:l:c:" opt; do
 			then
 				echo Location already mounted, performing umount prior to following link:
 				echo $ umount $mntPath
-				umount $mntPath
+				umount "$mntPath"
 			fi
 				echo Opening: $output # display target location in terminal
 				open smb://$USER:$(security find-generic-password -a ${USER} -w)@"$output" # "follow" the link!
@@ -59,7 +59,7 @@ while getopts "o:l:c:" opt; do
     				sleep 10
 				done
 				filePath=$mntPath/${output##*/} # construct path to file beyond mountpoint
-				open $filePath # open file on local machine using default program for filetype
+				open "$filePath" # open file on local machine using default program for filetype
 				echo Mounted $output as $mntPath
 			;;
 		c ) # copy file to local machine
@@ -74,7 +74,7 @@ while getopts "o:l:c:" opt; do
 			then
 				echo Location already mounted, performing umount prior to following link:
 				echo $ umount $mntPath
-				umount $mntPath
+				umount "$mntPath"
 			fi
 				open smb://$USER:$(security find-generic-password -a ${USER} -w)@"$output" # "follow" the link!
 				while [ ! -d "$mntPath" ]; do # wait for mount to complete
@@ -89,7 +89,7 @@ while getopts "o:l:c:" opt; do
 				then
 					destination=$3
 				fi
-				cp $filePath $destination # copy file to destination
+				cp "$filePath" "$destination" # copy file to destination
 				echo Copying: $output to $destination: # display target location in terminal
 				echo $ cp $filePath $destination
 				echo Mounted $output as $mntPath
