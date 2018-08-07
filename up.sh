@@ -15,7 +15,7 @@
 #		. up.sh -> moves to ~/<Directory>
 #		. up.sh 2 -> moves to ~/
 cd .. # always move up at least one directory, even if no argument is passed
-if [ $1 > 1 ] 
+if [ $1 -gt 1 ] 
 then
 	for ((  i = 1 ;  i < $1;  i++  ))
 	do
