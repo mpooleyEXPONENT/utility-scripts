@@ -1,23 +1,23 @@
 #!/bin/bash
 #
 #
-# link.sh helps navigate to remote network locations, and interact with files at these locations.
-# A Windows format link is assumed, but MacOS links may resolve correctly is "smb:" is omited from the beginning (untested).
+# lk.sh helps navigate to remote network locations, and interact with files at these locations.
+# A Windows format link is assumed, but MacOS links may resolve correctly if "smb:" is omited from the beginning (untested).
 # USAGE:
-# link.sh -<OPTION (-l, -o, or -c)> <ARG1(required)> <ARG2(only applicable to -c option)>:
+# lk.sh -<OPTION (-l, -o, or -c)> <ARG1(required)> <ARG2(only applicable to -c option)>:
 #
 #		Option -l navigates to a link:
-#		link.sh -l $PATH. E.G.: link.sh -l "//<networkPath>/<directory>" navigates <directory> at <networkPath>.
-#			$PATH is the path, in Windows format, to either a directory or a file on a server. If a file is used, link.sh opens the directory that holds the file.	
+#		lk.sh -l $PATH. E.G.: lk.sh -l "//<networkPath>/<directory>" navigates <directory> at <networkPath>.
+#			$PATH is the path, in Windows format, to either a directory or a file on a server. If a file is used, lk.sh opens the directory that holds the file.	
 #
 #		Option -o opens a file:
-#		link.sh -o $PATH. E.G.: link.sh -o "//<server>/<sharedFolder>/<exampleFile>" opens <exampleFile> in <sharedFolder> on network storage <server>
+#		lk.sh -o $PATH. E.G.: lk.sh -o "//<server>/<sharedFolder>/<exampleFile>" opens <exampleFile> in <sharedFolder> on network storage <server>
 #			$PATH is the path, in Windows format, to a file on a server. If only a directory is supplied, this is opened in finder.
 #		
 #		Option -c copies a file to a local location
-#		link.sh -c $PATH $DESINATION. E.G.: link.sh -c "//<server>/<sharedFolder>/<exampleFile>" "<localFolder>" copies <exampleFile> to the local machine at <localFolder>
+#		lk.sh -c $PATH $DESINATION. E.G.: lk.sh -c "//<server>/<sharedFolder>/<exampleFile>" "<localFolder>" copies <exampleFile> to the local machine at <localFolder>
 #			$PATH is the path, in Windows format, to a file on a server. If only a directory is supplied this will cause problems.
-#			$DESTINATION is the local directory into which the copy should be placed. If no $Destination is supplied, the default "~/Downloads" is used.
+#			$DESTINATION is the local directory into which the copy should be placed. If no $DESTINATION is supplied, the default "~/Downloads" is used.
 #
 while getopts "o:l:c:" opt; do
 	case $opt in
