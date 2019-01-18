@@ -91,8 +91,8 @@ while getopts "o:l:c:" opt; do
 				fi
 				cp "$filePath" "$destination" # copy file to destination
 				echo Copying: $output to $destination: # display target location in terminal
-				echo $ cp $filePath $destination
 				echo Mounted $output as $mntPath
+				echo $ cp $filePath $destination
 			;;
 	esac
 done
