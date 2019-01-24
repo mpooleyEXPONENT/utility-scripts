@@ -21,7 +21,7 @@ then
 		cd $path # cd to projects folder (mkdir -p syntex is simpler from target directory)
 		echo 'New project directory created:' $(pwd)'/'$s
 		eval "mkdir -p '$s'/{'Work Product','Documents Received','Contractual'}"
-		cd $dir # return to initial directory
+		cd "$dir" # return to initial directory
 	fi
 else
 	echo "Project directory" $path "does not exist"
