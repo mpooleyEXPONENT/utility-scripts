@@ -19,7 +19,7 @@
 #			$PATH is the path, in Windows format, to a file on a server. If only a directory is supplied this will cause problems.
 #			$DESTINATION is the local directory into which the copy should be placed. If no $DESTINATION is supplied, the default "~/Downloads" is used.
 #
-while getopts "o:l:c:" opt; do
+while getopts "o:l:c:d" opt; do
 	case $opt in
 		l ) # Navigate Finder to a target network directory
 			input=$OPTARG
@@ -93,6 +93,14 @@ while getopts "o:l:c:" opt; do
 				echo Copying: $output to $destination: # display target location in terminal
 				echo Mounted $output as $mntPath
 				echo $ cp $filePath $destination
+			;;
+		d ) # run bespoke default behavior (example below is to run lk -l on a path saved in a file called networkLocation)
+			if [ -f networkLocation ]; then
+				input="$(cat networkLocation)"
+				lk -l "$input"
+			else
+				echo "networkLocation file does not exist, unable to navigate to network folder."
+			fi
 			;;
 	esac
 done
