@@ -11,9 +11,9 @@
 input=$1
 # remove "smb:" if it is included in the input path
 if [ "${input:0:3}" = "smb" ]; then
-	output="${input:4}"
+	input="${input:4}"
 fi
-output=${output//\//\\} # replace all backslashes with forwardslashes
+output=${input//\//\\} # replace all backslashes with forwardslashes
 
 # output to terminal
 echo 
