@@ -2,15 +2,18 @@
 #
 #
 # smb2win.sh converts a smb path into a windows path
-# USAGE:
-# smb2win [-c] smb_path:
-#		returns <windows path>
-# 	e.g.: 
-#		smb2win.sh smb://path/directory/file.txt returns \\path\directory\file.txt and copies this path to clipboard
+# USAGE: smb2win [-c] smb_path
+#		default behaviour prints the windows version of smb_path and copies this to clipboad
+# 	e.g.: smb2win.sh "smb://path/directory/file.txt" prints "\\path\directory\file.txt" and copies this path to clipboard
 #	optional flag -c suppresses output to clipboard
 
 # define string transform operation
 path_transform () {
+	# path_transform() converts a smb path to a windows path
+	# USAGE: path_transform input
+	#		sets a variable "output" such that $output is the windows version of $input
+	#	input must be a string
+	#	output is a string
 	input=$1
 	# remove "smb:" if it is included in the input path
 	if [ "${input:0:3}" = "smb" ]; then
