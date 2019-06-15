@@ -20,7 +20,7 @@ then
 	else
 		cd $path # cd to projects folder (mkdir -p syntex is simpler from target directory)
 		echo 'New project directory created:' $(pwd)'/'$s
-		eval "mkdir -p '$s'/{'Work Product','Documents Received','Contractual'}"
+		eval "mkdir -p '$s'/{'Work Product','Non-work Product','Contractual'}"
 		cd "$dir" # return to initial directory
 	fi
 else
