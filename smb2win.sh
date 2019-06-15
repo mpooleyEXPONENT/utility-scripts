@@ -14,7 +14,7 @@ path_transform () {
 	#		sets a variable "output" such that $output is the windows version of $input
 	#	input must be a string
 	#	output is a string
-	input=$1
+	input="$1"
 	# remove "smb:" if it is included in the input path
 	if [ "${input:0:3}" = "smb" ]; then
 		input="${input:4}"
@@ -23,10 +23,10 @@ path_transform () {
 }
 
 if [ $# = 2 ] && [ $1 = "-c" ]; then # if optional flag [-c] is supplied the output path is not copied to clipboard
-	path_transform $2
-	echo $output
+	path_transform "$2"
+	echo "$output"
 elif [ $# = 1 ]; then # if optional flag is not supplied then the output path is copied to clipboard
-	path_transform $1
+	path_transform "$1"
 	echo -n "$output" | tee >(pbcopy) # -n flag needed to prevent linebreak being added to clipboard
 	echo # echo to get newline in terminal
 else # if input is not correct a usage message is displayed along with an appropriate error message
