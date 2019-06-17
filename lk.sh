@@ -19,16 +19,29 @@
 #			$PATH is the path, in Windows format, to a file on a server. If only a directory is supplied this will cause problems.
 #			$DESTINATION is the local directory into which the copy should be placed. If no $DESTINATION is supplied, the default "~/Downloads" is used.
 #
+
+# define string transformation operation
+path_create () {
+	# path_create() creates a path for mounting the input link to /Volumnes/ and stores as a string in $mntPath
+	# USAGE: path_create input_path
+	#		removes "smb:" if required, and ensures all slashes are '/' format
+	#		mounts input_path to /Volumnes/
+	input="$1"
+	# remove "smb:" if it is included in the input path
+	if [ "${input:0:3}" = "smb" ]; then
+		input="${input:4}"
+	fi
+	output=${input//\\//} # replace all backslashes with forwardslashes
+	while [ ${output:0:1} == "/" ]; do # remove any '/' from the start of the input string
+		output=${output:1}
+	done
+	mntPath=/Volumes/${output##*/} # construct path to file via mountpoint in /Volumnes/
+}
+
 while getopts "o:l:c:d" opt; do
 	case $opt in
 		l ) # Navigate Finder to a target network directory
-			input=$OPTARG
-			output=${input//\\//} # replace all backslashes with forwardslashes
-			while [ ${output:0:1} == "/" ]; do # remove any '/' from the start of the input string
-				output=${output:1}
-			done
-
-			mntPath=/Volumes/${output##*/} # construct path to file via mountpoint in /Volumnes/
+			path_create "$OPTARG"
 			if [ -d "$mntPath" ] # prevent multiple mountpoint to identical locations
 			then
 				echo Location already mounted, performing umount prior to following link:
@@ -40,13 +53,7 @@ while getopts "o:l:c:d" opt; do
 				echo Mounted $output as $mntPath
 			;;
 		o ) # Open target file
-			input=$OPTARG
-			output=${input//\\//} # replace all backslashes with forwardslashes
-			while [ ${output:0:1} == "/" ]; do # remove any '/' from the start of the input string
-				output=${output:1}
-			done
-
-			mntPath=/Volumes/${output##*/} # construct path to file via mountpoint in /Volumnes/
+			path_create "$OPTARG"
 			if [ -d "$mntPath" ] # prevent multiple mountpoint to identical locations
 			then
 				echo Location already mounted, performing umount prior to following link:
@@ -63,13 +70,7 @@ while getopts "o:l:c:d" opt; do
 				echo Mounted $output as $mntPath
 			;;
 		c ) # copy file to local machine
-			input=$OPTARG
-			output=${input//\\//} # replace all backslashes with forwardslashes
-			while [ ${output:0:1} == "/" ]; do # remove any '/' from the start of the input string
-				output=${output:1}
-			done
-
-			mntPath=/Volumes/${output##*/} # construct path to file via mountpoint in /Volumnes/
+			path_create "$OPTARG"
 			if [ -d "$mntPath" ] # prevent multiple mountpoint to identical locations
 			then
 				echo Location already mounted, performing umount prior to following link:
