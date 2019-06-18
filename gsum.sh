@@ -8,19 +8,21 @@
 # USAGE: gsum.sh [-s source_directory] [-d destination_directory] [-a algorithm]
 commandStr="find . -type f -exec openssl sha256 '{}' + > $(date "+%y%m%d_%H%M%S_%Z")_checksums.txt"
 # modify commandStr with supplied optional parameters
-while getopts "s:a:d:" opt; do
+while getopts "s:a:d:f:" opt; do
 	case $opt in
 		s ) # specify source directory
-		commandStr=${commandStr/./"$OPTARG"}
-        echo $commandStr	
+		commandStr=${commandStr/./"$OPTARG"}	
 			;;
         a ) # specify algorithm
         commandStr=${commandStr/ openssl sha256 / openssl "$OPTARG" }
-        echo $commandStr
             ;;
         d ) # specify distination directory
-        commandStr=${commandStr/> $(date "+%y%m%d_%H%M%S_%Z")_checksums.txt/> "$OPTARG"/$(date "+%y%m%d_%H%M%S_%Z")_checksums.txt}
-        echo $commandStr
+        commandStr=${commandStr/> $(date "+%y%m%d_%H%M%S_%Z")/> "$OPTARG"/$(date "+%y%m%d_%H%M%S_%Z")}
+            ;;
+        f ) # specify filename for output
+        commandStr=${commandStr/$(date "+%y%m%d_%H%M%S_%Z")_checksums.txt/$(date "+%y%m%d_%H%M%S_%Z")_"$OPTARG"}
+            ;;
 	esac
 done
 eval $commandStr
+echo $commandStr
