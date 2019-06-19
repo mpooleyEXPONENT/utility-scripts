@@ -1,6 +1,5 @@
 #!/bin/bash
 # 
-#
 # gsum.sh generates a list of cryptographic hash values for all files within the current directory.
 # A time stamp is prepended to the output file based on the current system time.
 # Default behavior is to create hash values using SHA256 for all files within the current directory, saving the output to a timestamped .txt file within the same directory
