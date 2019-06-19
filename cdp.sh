@@ -14,9 +14,9 @@ if [ $# = 0 ]; then
     cd "$projectFolder"
 
 elif [ $# = 1 ]; then   
-	cd "$projectFolder/$(ls $projectFolder | grep "$1")"
+	cd "$projectFolder/$(ls $projectFolder | grep -i "$1")"
 elif [ $# = 2 ]; then
-    cd ""$2"/$(ls "$2" | grep "$1")"
+    cd ""$2"/$(ls "$2" | grep -i "$1")"
 else
     echo "Usage: . cdp [search_string [search_directory]]"
     echo "        search_string is a substring within the desired folder's name"
