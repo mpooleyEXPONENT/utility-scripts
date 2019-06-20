@@ -4,7 +4,7 @@
 # A time stamp is prepended to the output file based on the current system time.
 # Default behavior is to create hash values using SHA256 for all files within the current directory, saving the output to a timestamped .txt file within the same directory
 #
-# USAGE: gsum.sh [-s source_directory] [-d destination_directory] [-a algorithm] [-f filename_label]
+# Usage: gsum.sh [-s source_directory] [-d destination_directory] [-a algorithm] [-f filename_label]
 commandStr="find . -type f -exec openssl sha256 '{}' + > $(date "+%y%m%d_%H%M%S_%Z")_checksums.txt"
 # modify commandStr with supplied optional parameters
 while getopts "s:a:d:f:" opt; do

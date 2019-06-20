@@ -30,7 +30,7 @@ elif [ $# = 1 ]; then # if optional flag is not supplied then the output path is
 	echo -n "$output" | tee >(pbcopy) # -n flag needed to prevent linebreak being added to clipboard
 	echo # echo to get newline in terminal
 else # if input is not correct a usage message is displayed along with an appropriate error message
-	echo "usage: smb2win [-c] smb_path"
+	echo "Usage: smb2win [-c] smb_path"
 	if [ $# = 2 ] && [ $1 != "-c" ]; then
 		printf "\tIncorrect optional flag: [-c] is the only available option flag, and is used to suppress copying output to clipboard" $warning
 	elif [ $# -gt 2 ]; then
