@@ -67,6 +67,14 @@ If no `destination_path` is supplied the default is the current directory from w
 - `-d` runs a user-configurable default behavior.  
 This currently is set to navigate to a path within a file with filename "networkLocation".
 
+### tf.sh
+tf.sh transfer copies of local files to a default remote network location, the path for which must be stored as a string within environmental variable `$transferFolder`.
+> USAGE: `tf.sh source_file [target_subdirectory]`
+> - e.g.: `tf.sh filename subdirectory` copes file `filename` to `$transferFolder/subdirectory`
+> - `source_file` is the local file to be copied to `$transferFolder`
+> - `target_subdirectory` is an optional argument that enables copying to a subdirectory within `$transferFolder`.
+> - NOTE: `$transferFolder` must omit the `smb://` from the network path to the desired default remote location.
+
 ### up.sh
 Enables easy navigation 'up' a path.
 > Usage: `. up.sh [n]`
