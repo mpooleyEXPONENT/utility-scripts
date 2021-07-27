@@ -46,4 +46,18 @@ if [ $# = 1 ]; then
         fi
         let "lineCount++"
     done < "$1"
+elif [ $# = 2 ]; then
+    lineCount=0
+    while read -r line
+    do
+        outFilename="tabulated_"$1""
+        if [[ "$lineCount" -eq 0 ]]; then
+            line_transform "$line" "$2"
+            echo "$output" > "$outFilename"
+        else
+            line_transform "$line" "$2"
+            echo "$output" >> "$outFilename"
+        fi
+        let "lineCount++"
+    done < "$1"
 fi
