@@ -5,7 +5,8 @@
 # Default behavior is to create hash values using SHA256 for all files within the current directory, saving the output to a timestamped .txt file within the same directory
 #
 # Usage: gsum.sh [-s source_directory] [-d destination_directory] [-a algorithm] [-f filename_label]
-commandStr="find . -type f -exec openssl sha256 '{}' + > $(date "+%y%m%d_%H%M%S_%Z")_checksums.txt"
+timeStamp=$(date "+%y%m%d_%H%M%S_%Z") # generate a single timestamp for use throughout entire script
+commandStr=$(printf 'find . -type f -exec openssl sha256 '{}' + > %s_checksums.txt' "$timeStamp")
 # modify commandStr with supplied optional parameters
 while getopts "s:a:d:f:" opt; do
 	case $opt in
@@ -16,10 +17,10 @@ while getopts "s:a:d:f:" opt; do
         commandStr=${commandStr/ openssl sha256 / openssl "$OPTARG" }
             ;;
         d ) # specify distination directory
-        commandStr=${commandStr/> $(date "+%y%m%d_%H%M%S_%Z")/> "$OPTARG"/$(date "+%y%m%d_%H%M%S_%Z")}
+        commandStr=${commandStr/> $timeStamp/> "$OPTARG"/$timeStamp}
             ;;
         f ) # specify filename for output
-        commandStr=${commandStr/$(date "+%y%m%d_%H%M%S_%Z")_checksums.txt/$(date "+%y%m%d_%H%M%S_%Z")_"$OPTARG"}
+        commandStr=${commandStr/$timeStamp_checksums.txt/$timeStamp_"$OPTARG"}
             ;;
 	esac
 done
