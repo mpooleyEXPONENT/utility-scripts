@@ -18,20 +18,20 @@ line_transform () {
     
     # process input string to seperate filename and hash value
     input="$1"
+    input_algorithm=${input%%\(*} # remove everything after and including the "("
     input_filename=${input##*/} # remove everything upto and including the "/" before the filename
-    input_filename=${input_filename%%)*} # remove everything after the )
+    input_filename=${input_filename%%)*} # remove everything after and including the ")"
     input_hash=${input##*)= } # remove everything upto and including the ")= "
     
     # create output line in desired format
-    if [ $# = 1 ]; then
-        output=$(printf '%s\t%s' "$input_filename" "$input_hash")
-    elif [ $# = 2 ]; then
-        output=$(printf '%s%s%s' "$input_filename" "$2" "$input_hash")
+    if [ $# = 1 ]; then # default is to use tabs as delimiters
+        output=$(printf '%s\t%s\t%s' "$input_algorithm" "$input_filename" "$input_hash")
+    elif [ $# = 2 ]; then # if a second argument is supplied it is used as the delimiter instead of tabs
+        output=$(printf '%s%s%s%s%s' "$input_algorithm" "$2" "$input_filename" "$2" "$input_hash")
     fi
 }
 
-
-
+# for loop to run over all lines of the input file, applying line_transform() to each line and echoing result into output file
 if [ $# = 1 ]; then
     lineCount=0
     while read -r line
