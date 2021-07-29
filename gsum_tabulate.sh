@@ -60,4 +60,9 @@ elif [ $# = 2 ]; then
         fi
         let "lineCount++"
     done < "$1"
+else
+    echo
+    echo ERROR: incorrect inputs to gsum_tabulate.
+    echo "Usage: gsum_tabulate inputFilename [delimiter]"
+    echo
 fi
