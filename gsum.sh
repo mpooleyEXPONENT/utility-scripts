@@ -8,7 +8,7 @@
 timeStamp=$(date "+%y%m%d_%H%M%S_%Z") # generate a single timestamp for use throughout entire script
 commandStr=$(printf 'find . -type f -exec openssl sha256 '{}' + > %s_checksums.txt' "$timeStamp")
 # modify commandStr with supplied optional parameters
-while getopts "s:a:d:f:" opt; do
+while getopts "s:a:d:f:t" opt; do
 	case $opt in
 		s ) # specify source directory
 		commandStr=${commandStr/./"$OPTARG"}	
@@ -22,7 +22,14 @@ while getopts "s:a:d:f:" opt; do
         f ) # specify filename for output
         commandStr=${commandStr/$timeStamp_checksums.txt/$timeStamp_"$OPTARG"}
             ;;
+        t ) # tabulated output desired
+        tabulatedFLAG=true # set flag to control subsequent logic
+            ;;
 	esac
 done
 eval $commandStr
 echo $commandStr
+if [ $tabulatedFLAG ]; then
+    fileToTabulate=${commandStr##*> } # select only the output filename from commandStr by removing everything before and including "> "
+    gsum_tabulate "$fileToTabulate"
+fi
