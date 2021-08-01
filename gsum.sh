@@ -8,6 +8,10 @@
 #   -t generates a tab delimited version of the checksum file output
 #   -c generates a comma delimited version of the checksum file output
 #       if both -t and -c are passed, only the first of these inputs is parsed
+
+source utility_styles.sh
+
+us_header "gsum"
 timeStamp=$(date "+%y%m%d_%H%M%S_%Z") # generate a single timestamp for use throughout entire script
 commandStr=$(printf 'find . -type f -exec openssl sha256 '{}' + > %s_checksums.txt' "$timeStamp")
 # modify commandStr with supplied optional parameters
@@ -31,7 +35,7 @@ while getopts "s:a:d:f:tc" opt; do
             tabulatedTabFLAG=true # set flag to control subsequent logic
             tabulatedFLAG=true # set tabulatedFLAG
         else
-            echo "-t argument has been ignored because -c argument was parsed"
+            us_warning "-t argument has been ignored"
         fi
             ;;
         c ) # tabulated output desired (comma delimited)
@@ -39,18 +43,22 @@ while getopts "s:a:d:f:tc" opt; do
             tabulatedCommaFLAG=true # set flag to control subsequent logic
             tabulatedFLAG=true # set tabulatedFLAG
         else
-            echo "-c argument has been ignored because -t argument was parsed"
+            us_warning "-c argument has been ignored"
         fi
             ;;
 	esac
 done
+
 eval $commandStr
-echo $commandStr
+us_success "executed: $commandStr" 
 if [ $tabulatedTabFLAG ]; then # if tab delimited table requested
     fileToTabulate=${commandStr##*> } # select only the output filename from commandStr by removing everything before and including "> "
     gsum_tabulate "$fileToTabulate"
+    us_success "executed: gsum_tabulate '$fileToTabulate'"
 fi
 if [ $tabulatedCommaFLAG ]; then # if comma delimited table requested
     fileToTabulate=${commandStr##*> } # select only the output filename from commandStr by removing everything before and including "> "
     gsum_tabulate "$fileToTabulate" ","
+    us_success "executed: gsum_tabulate '$fileToTabulate' ','"
 fi
+us_end "gsum"
