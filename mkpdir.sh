@@ -5,7 +5,8 @@
 # Usage: mkpdir.sh project_folder_name
 #	e.g: mkpdir.sh "1234567.000 - project name" -> creates folder "1234567.000 - project name" in $projectFolder, within this newly created folder will be the standard subfolders
 
-
+source utility_styles.sh
+us_header "mkpdir"
 # USER CONFIGURABLE VARIABLES
 path=$projectFolder # define target directory in which project folders will be placed (recomment setting this as an environmental variable, e.g. projectFolder)
 # -----------------------------
@@ -17,23 +18,22 @@ if [ $# = 1 ]; then
 	then
 		if [ -d "$path/$s" ] #check if directory already exists
 		then
-			echo 'Project folder already exists'
+			us_error 'Project folder already exists'
 		else
 			cd $path # cd to projects folder (mkdir -p syntex is simpler from target directory)
-			echo 'New project directory created:' $(pwd)'/'$s
 			eval "mkdir -p '$s'/{'Work Product','Non-work Product','Contractual'}"
+			us_success "New project directory created: $(pwd)"
 			cd "$dir" # return to initial directory
 		fi
 	else
-		echo "Project directory" $path "does not exist"
+		us_error "Project directory $path does not exist"
 	fi
 else
-	echo "~~~~~~~~ mkpdir: INPUT ERROR ~~~~~~~~"
-	echo "Usage: mkpdir.sh project_folder_name"
+	us_note "Usage: mkpdir.sh project_folder_name"
 	if [ $# = 0 ]; then
-		echo "      Too few arguments: project_folder_name must be supplied"
+		us_error "      Too few arguments: project_folder_name must be supplied"
 	else
-		echo "      Too many arguments: see usage message above"
+		us_error "      Too many arguments: see usage message above"
 	fi
-	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 fi
+us_end "mkpdir"

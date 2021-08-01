@@ -7,6 +7,8 @@
 # 	e.g.: smb2win.sh "smb://path/directory/file.txt" prints "\\path\directory\file.txt" and copies this path to clipboard
 #	optional flag -c suppresses output to clipboard
 
+source utility_styles.sh
+us_header "smb2win"
 # define string transform operation
 path_transform () {
 	# path_transform() converts a smb path to a windows path
@@ -30,13 +32,13 @@ elif [ $# = 1 ]; then # if optional flag is not supplied then the output path is
 	echo -n "$output" | tee >(pbcopy) # -n flag needed to prevent linebreak being added to clipboard
 	echo # echo to get newline in terminal
 else # if input is not correct a usage message is displayed along with an appropriate error message
-	echo "Usage: smb2win [-c] smb_path"
+	us_note "Usage: smb2win [-c] smb_path"
 	if [ $# = 2 ] && [ $1 != "-c" ]; then
-		printf "\tIncorrect optional flag: [-c] is the only available option flag, and is used to suppress copying output to clipboard" $warning
+		us_warning "Incorrect optional flag: [-c] is the only available option flag, and is used to suppress copying output to clipboard" 
 	elif [ $# -gt 2 ]; then
-		printf "\tToo many input arguments detected, see correct usage above" $warning
+		us_warning "Too many input arguments detected, see correct usage above" 
 	elif [ $# = 0 ]; then
-		printf "\tNo arguments detected, see correct usage above" $warning
+		us_warning "No arguments detected, see correct usage above" 
 	fi
-	printf "%s\n" $warning
 fi
+us_end "smb2win"
