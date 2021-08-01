@@ -4,7 +4,10 @@
 # A time stamp is prepended to the output file based on the current system time.
 # Default behavior is to create hash values using SHA256 for all files within the current directory, saving the output to a timestamped .txt file within the same directory
 #
-# Usage: gsum.sh [-s source_directory] [-d destination_directory] [-a algorithm] [-f filename_label]
+# Usage: gsum.sh [-s source_directory] [-d destination_directory] [-a algorithm] [-f filename_label] [-t|c]
+#   -t generates a tab delimited version of the checksum file output
+#   -c generates a comma delimited version of the checksum file output
+#       if both -t and -c are passed, only the first of these inputs is parsed
 timeStamp=$(date "+%y%m%d_%H%M%S_%Z") # generate a single timestamp for use throughout entire script
 commandStr=$(printf 'find . -type f -exec openssl sha256 '{}' + > %s_checksums.txt' "$timeStamp")
 # modify commandStr with supplied optional parameters
