@@ -8,7 +8,8 @@
 timeStamp=$(date "+%y%m%d_%H%M%S_%Z") # generate a single timestamp for use throughout entire script
 commandStr=$(printf 'find . -type f -exec openssl sha256 '{}' + > %s_checksums.txt' "$timeStamp")
 # modify commandStr with supplied optional parameters
-while getopts "s:a:d:f:t" opt; do
+tabulatedFLAG=false # indicates whether or not a tabulatedFLAG has been set
+while getopts "s:a:d:f:tc" opt; do
 	case $opt in
 		s ) # specify source directory
 		commandStr=${commandStr/./"$OPTARG"}	
@@ -22,14 +23,31 @@ while getopts "s:a:d:f:t" opt; do
         f ) # specify filename for output
         commandStr=${commandStr/$timeStamp_checksums.txt/$timeStamp_"$OPTARG"}
             ;;
-        t ) # tabulated output desired
-        tabulatedFLAG=true # set flag to control subsequent logic
+        t ) # tabulated output desired (tab delimited)
+        if [ $tabulatedFLAG = false ]; then # if a tabulateFLAG isn't already set
+            tabulatedTabFLAG=true # set flag to control subsequent logic
+            tabulatedFLAG=true # set tabulatedFLAG
+        else
+            echo "-t argument has been ignored because -c argument was parsed"
+        fi
+            ;;
+        c ) # tabulated output desired (comma delimited)
+        if [ $tabulatedFLAG = false ]; then    
+            tabulatedCommaFLAG=true # set flag to control subsequent logic
+            tabulatedFLAG=true # set tabulatedFLAG
+        else
+            echo "-c argument has been ignored because -t argument was parsed"
+        fi
             ;;
 	esac
 done
 eval $commandStr
 echo $commandStr
-if [ $tabulatedFLAG ]; then
+if [ $tabulatedTabFLAG ]; then # if tab delimited table requested
     fileToTabulate=${commandStr##*> } # select only the output filename from commandStr by removing everything before and including "> "
     gsum_tabulate "$fileToTabulate"
+fi
+if [ $tabulatedCommaFLAG ]; then # if comma delimited table requested
+    fileToTabulate=${commandStr##*> } # select only the output filename from commandStr by removing everything before and including "> "
+    gsum_tabulate "$fileToTabulate" ","
 fi
