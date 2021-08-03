@@ -29,16 +29,16 @@ if [ $# = 2 ] && [ $1 = "-c" ]; then # if optional flag [-c] is supplied the out
 	echo "$output"
 elif [ $# = 1 ]; then # if optional flag is not supplied then the output path is copied to clipboard
 	path_transform "$1"
-	echo -n "$output" | tee >(pbcopy) # -n flag needed to prevent linebreak being added to clipboard
+	tput setaf 38; echo -n "$output" | tee >(pbcopy); tput sgr0 # -n flag needed to prevent linebreak being added to clipboard
 	echo # echo to get newline in terminal
 else # if input is not correct a usage message is displayed along with an appropriate error message
 	us_note "Usage: smb2win [-c] smb_path"
 	if [ $# = 2 ] && [ $1 != "-c" ]; then
-		us_warning "Incorrect optional flag: [-c] is the only available option flag, and is used to suppress copying output to clipboard" 
+		us_error "Incorrect optional flag or option flag passed in incorrect position: [-c] is the only available option flag, and is passed after the input path to suppress copying output to clipboard" 
 	elif [ $# -gt 2 ]; then
-		us_warning "Too many input arguments detected, see correct usage above" 
+		us_error "Too many input arguments detected, see correct usage above" 
 	elif [ $# = 0 ]; then
-		us_warning "No arguments detected, see correct usage above" 
+		us_error "No arguments detected, see correct usage above" 
 	fi
 fi
 us_end "smb2win"
