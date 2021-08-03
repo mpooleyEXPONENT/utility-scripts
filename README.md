@@ -32,6 +32,7 @@ A time stamp is prepended to the output file based on the current system time.
 > - `-d destination_directory` specifies a path to the directory in which the output .txt file will be saved. Default is the current directory from which the script is called.
 > - `-a algorithm` specifies the openssl algorithm to use. Default is sha256
 > - `-f file_label` specifies the filename label that is appended to the timestamp. Default is _checksums.txt
+> - `-t|-c` generates a tabulated version of the standard output with either tab (`-t`) of comma (`-c`) deliminted columns. Only the first of these flags is parsed.
 
 ### smb2win.sh
 smb2win.sh converts a smb path into a windows path.
@@ -57,14 +58,14 @@ If `search_string` is found within a folder name in the `search_directory` then 
 ### lk.sh
 lk.sh helps navigate to remote network locations, and interact with files at these locations.
 > USAGE: `lk.sh [-l path | -o path | -c source_path destination_path | -d]`
-- `-l path` opens `path` in finder  
-e.g.: `lk.sh -l "//<networkPath>/<directory>"` opens `<directory>` at `<networkPath>`.  
-- `-o path` opens a file specified by  `path`  
+> - `-l path` opens `path` in finder  
+> e.g.: `lk.sh -l "//<networkPath>/<directory>"` opens `<directory>` at `<networkPath>`.  
+> - `-o path` opens a file specified by  `path`  
 e.g.: `lk.sh -o "//<server>/<sharedFolder>/<exampleFile>"` opens `<exampleFile>` from `<sharedFolder>`.
-- `-c source_path destination_path` copies a file specified in `source_path` to `destination_path`.  
+> - `-c source_path destination_path` copies a file specified in `source_path` to `destination_path`.  
 e.g.: `lk.sh -c "//<server>/<sharedFolder>/<exampleFile>" "<localFolder>"` copies `<exampleFile>` to the local machine at `<localFolder>`.  
 If no `destination_path` is supplied the default is the current directory from which the script is run.
-- `-d` runs a user-configurable default behavior.  
+> - `-d` runs a user-configurable default behavior.  
 This currently is set to navigate to a path within a file with filename "networkLocation".
 
 ### tf.sh
@@ -82,6 +83,13 @@ Enables easy navigation 'up' a path.
 > - `. up.sh n` moves up n directories
 > - NOTE: This file must be SOURCED, i.e. use: `.` before `up.sh`  
 For convenience, consider placing a suitable alias in bash_profile, e.g.: `alias up= ". up.sh"`
+
+### utility_styles.sh
+Some style settings that can be included within other scripts
+> Usage: source into other scripts, e.g.:
+> - `source utility_styles.sh` 
+> - Then call functions defined in utility_styles.sh
+> - See utility_styles.sh for a list of stylized output options
 
 
 

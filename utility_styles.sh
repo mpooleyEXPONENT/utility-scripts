@@ -1,4 +1,4 @@
-# styles for output messages to be sourced by other utility-scripts
+# styles for output messages to be sourced by other utility-scripts:
 bold=$(tput bold)
 underline=$(tput sgr 0 1)
 reset=$(tput sgr0)
@@ -9,13 +9,10 @@ green=$(tput setaf 76)
 tan=$(tput setaf 3)
 blue=$(tput setaf 38)
 
-#
-# Headers and  Logging
-#
-
+# Stylized messages:
 us_header() { printf "\n${bold}${purple}=========================  %s  =========================${reset}\n" "$@" 
 }
-us_end() { printf "${bold}${purple}=======================  %s END ========================${reset}\n" "$@" 
+us_end() { printf "${bold}${purple}=======================  %s END ========================${reset}\n\n" "$@" 
 }
 us_success() { printf "${green}✔ %s${reset}\n" "$@"
 }
