@@ -22,7 +22,12 @@ if [ $# = 1 ]; then
 		else
 			cd $path # cd to projects folder (mkdir -p syntex is simpler from target directory)
 			eval "mkdir -p '$s'/{'Work Product','Non-work Product','Contractual'}"
-			us_success "New project directory created: $(pwd)"
+			if [ -x "$(command -v tree)" ]; then
+				us_success "New project directory created:"
+				tput setaf 76; tree -N --noreport "$path/$s"; tput sgr0
+			else
+				us_success "New project directory created: $(pwd)"
+			fi
 			cd "$dir" # return to initial directory
 		fi
 	else
