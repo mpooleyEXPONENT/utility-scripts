@@ -32,6 +32,7 @@ A time stamp is prepended to the output file based on the current system time.
 > - `-d destination_directory` specifies a path to the directory in which the output .txt file will be saved. Default is the current directory from which the script is called.
 > - `-a algorithm` specifies the openssl algorithm to use. Default is sha256
 > - `-f file_label` specifies the filename label that is appended to the timestamp. Default is _checksums.txt
+> - `-v` requests verbose output, which prints a list of filenames with their computed has values to the stdout
 > - `-t|-c` generates a tabulated version of the standard output with either tab (`-t`) of comma (`-c`) deliminted columns. Only the first of these flags is parsed.
 
 ### smb2win.sh
