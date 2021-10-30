@@ -39,7 +39,14 @@ A time stamp is prepended to the output file based on the current system time.
 smb2win.sh converts a smb path into a windows path.
 > USAGE: `smb2win [-c] smb_path`
 > - Default behavior prints the windows version of `smb_path` and copies this to clipboard  
-e.g.: `smb2win.sh "smb://path/directory/file.txt"` prints "\\path\directory\file.txt" and copies this path to clipboard
+e.g.: `smb2win.sh "smb://path/directory/file.txt"` prints "\\\path\directory\file.txt" and copies this path to clipboard
+> -	`-c` suppresses output to clipboard
+
+### win2smb.sh
+win2smb.sh converts a windows path into a smb path.
+> USAGE: `win2smb [-c] win_path`
+> - Default behavior prints the smb version of `win_path` and copies this to clipboard  
+e.g.: `win2smb.sh "\\path\directory\file.txt"` prints "smb://path/directory/file.txt" and copies this path to clipboard
 > -	`-c` suppresses output to clipboard
 
 ### mkpdir.sh
