@@ -86,11 +86,15 @@ tf.sh transfer copies of local files to a default remote network location, the p
 
 ### up.sh
 Enables easy navigation 'up' a path.
-> Usage: `. up.sh [n]`
+> USAGE: `. up.sh [n]`
 > - `. up.sh` moves up one directory level
 > - `. up.sh n` moves up n directories
 > - NOTE: This file must be SOURCED, i.e. use: `.` before `up.sh`  
 For convenience, consider placing a suitable alias in bash_profile, e.g.: `alias up= ". up.sh"`
+
+### code_clipper.sh
+Converts code into PDF files for printing.
+> USAGE: <WIP - see comment in file>
 
 ### utility_styles.sh
 Some style settings that can be included within other scripts
